@@ -19,4 +19,7 @@ export class QueryTodoListDto {
 
   @IsOptional() limit?: number;
   @IsOptional() offset?: number;
+
+  @IsOptional() @IsString() subtasks?: string;
+
 }

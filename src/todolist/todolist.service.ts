@@ -6,32 +6,6 @@ import { CreateTodoListDto } from './dto/create-todolist.dto';
 import { UpdateTodoListDto } from './dto/update-todolist.dto';
 import { QueryTodoListDto } from './dto/query-todolist.dto';
 
-type LocalizedField = { [key: string]: string | undefined };
-
-type TodoListTranslated = {
-  _id: string;
-  name: string;
-  description?: string;
-  status: boolean;
-  date: Date;
-  datecomplete: Date;
-  assignee?: string;
-  subtasks: { title: string; done: boolean }[];
-  language: string;
-};
-
-type TodoListFull = {
-  _id: string;
-  name: LocalizedField;
-  description?: LocalizedField;
-  status: boolean;
-  date: Date;
-  datecomplete: Date;
-  assignee?: string;
-  subtasks: { title: LocalizedField; done: boolean }[];
-  language: string;
-};
-
 @Injectable()
 export class TodolistService {
   constructor(
@@ -39,139 +13,200 @@ export class TodolistService {
     private todoListModel: Model<TodoListDocument>,
   ) {}
 
-  async create(dto: CreateTodoListDto): Promise<TodoList> {
-    const { name, description, language, subtasks = [], ...rest } = dto;
+  private getLang(lang?: string): 'th' | 'en' | '' {
+    if (lang === 'th' || lang === 'en') return lang;
+    return ''; // all
+  }
 
-    const localizedSubtasks = subtasks.map((s) => ({
-      title: { [language]: s.title },
+  // CREATE
+  async create(dto: CreateTodoListDto): Promise<TodoList> {
+    const lang = this.getLang(dto.language);
+    const subtasks = (dto.subtasks || []).map(s => ({
+      title: lang ? { [lang]: s.title } : s.title,
       done: s.done ?? false,
     }));
 
     const newTodo = new this.todoListModel({
-      ...rest,
-      name: { [language]: name },
-      description: description ? { [language]: description } : undefined,
-      subtasks: localizedSubtasks,
+      name: dto.name,
+      description: dto.description,
+      assignee: dto.assignee,
+      subtasks,
+      status: dto.status ?? false,
+      date: dto.date,
+      datecomplete: dto.datecomplete,
+      language: dto.language,
     });
 
     return newTodo.save();
   }
 
-  async findAll(query: QueryTodoListDto): Promise<(TodoListTranslated | TodoListFull)[]> {
-    const language = query.language === 'en' || query.language === 'th' ? query.language : '';
-    const filter: Record<string, unknown> = {};
+  // FIND ALL
+  async findAll(query: QueryTodoListDto): Promise<any[]> {
+    const lang = this.getLang(query.language);
+    const other = lang === 'en' ? 'th' : 'en';
 
-    if (query.name && language) {
-      filter[`name.${language}`] = { $regex: query.name, $options: 'i' };
-    }
-
-    if (query.description && language) {
-      filter[`description.${language}`] = { $regex: query.description, $options: 'i' };
-    }
-
-    if (query.assignee) {
-      filter.assignee = { $regex: query.assignee, $options: 'i' };
-    }
-
-    if (query.status !== undefined) {
-      filter.status = query.status === 'true';
-    }
-
-    if (query.date) {
-      filter.date = { $gte: new Date(query.date) };
-    }
-
-    if (query.datecomplete) {
-      filter.datecomplete = { $lte: new Date(query.datecomplete) };
-    }
+    const filter: any = {};
+    if (query.name && lang) filter[`name.${lang}`] = { $regex: query.name, $options: 'i' };
+    if (query.description && lang) filter[`description.${lang}`] = { $regex: query.description, $options: 'i' };
+    if (query.assignee && lang) filter[`assignee.${lang}`] = { $regex: query.assignee, $options: 'i' };
+    if (query.status !== undefined) filter.status = query.status === 'true';
+    if (query.date) filter.date = { $gte: new Date(query.date) };
+    if (query.datecomplete) filter.datecomplete = { $lte: new Date(query.datecomplete) };
+    if (query.subtasks && lang) {filter[`subtasks.title.${lang}`] = { $regex: query.subtasks, $options: 'i' };}
 
     const limit = Number(query.limit) || 100;
     const offset = Number(query.offset) || 0;
+    const sortBy = query.sortBy || 'date';
+    const order: SortOrder = query.order === 'desc' ? -1 : 1;
+    const sortField = ['name', 'description', 'assignee'].includes(sortBy) && lang
+      ? `${sortBy}.${lang}`
+      : sortBy;
 
-    const localizedFields = ['name', 'description'];
-    let sort: Record<string, SortOrder> | undefined;
-
-    if (query.sortBy) {
-      if (localizedFields.includes(query.sortBy) && language) {
-        sort = { [`${query.sortBy}.${language}`]: query.order === 'desc' ? -1 : 1 };
-      } else {
-        sort = { [query.sortBy]: query.order === 'desc' ? -1 : 1 };
-      }
-    }
-
-    const result = await this.todoListModel
+    const docs = await this.todoListModel
       .find(filter)
-      .sort(sort)
+      .sort({ [sortField]: order })
       .skip(offset)
       .limit(limit)
       .lean()
       .exec();
 
-    return result.map((doc): TodoListFull | TodoListTranslated => {
-      const base = {
-        _id: doc._id.toString(),
-        status: doc.status,
-        date: doc.date,
-        datecomplete: doc.datecomplete,
-        assignee: doc.assignee,
-      };
-
-      if (language) {
-        return {
-          ...base,
-          name: doc.name?.[language] ?? Object.values(doc.name || {})[0] ?? '',
-          description: doc.description?.[language] ?? Object.values(doc.description || {})[0] ?? '',
-          subtasks: (doc.subtasks || []).map((s) => ({
-            title: s.title?.[language] ?? Object.values(s.title || {})[0] ?? '',
-            done: s.done,
-          })),
-          language,
-        };
-      } else {
-        return {
-          ...base,
-          name: doc.name,
-          description: doc.description,
-          subtasks: doc.subtasks || [],
-          language: 'all',
-        };
-      }
-    });
+    return docs.map(doc => ({
+      _id: doc._id.toString(),
+      name: lang
+        ? doc.name?.[lang] ?? doc.name?.[other] ?? ''
+        : doc.name,
+      description: lang
+        ? doc.description?.[lang] ?? doc.description?.[other] ?? ''
+        : doc.description,
+      assignee: lang
+        ? typeof doc.assignee === 'object'
+          ? doc.assignee[lang] ?? doc.assignee[other] ?? ''
+          : doc.assignee
+        : doc.assignee,
+      subtasks: (doc.subtasks || []).map(s => ({
+        title: lang
+          ? typeof s.title === 'object'
+            ? s.title[lang] ?? s.title[other] ?? ''
+            : s.title
+          : s.title,
+        done: s.done,
+      })),
+      status: doc.status,
+      date: doc.date,
+      datecomplete: doc.datecomplete,
+      language: lang || 'all',
+    }));
   }
 
-  async findOne(id: string): Promise<TodoList | null> {
-    return this.todoListModel.findById(id).exec();
+  // FIND ONE
+  async findOne(id: string, language?: string): Promise<any> {
+    const lang = this.getLang(language);
+    const other = lang === 'en' ? 'th' : 'en';
+
+    const doc = await this.todoListModel.findById(id).lean().exec();
+    if (!doc) throw new NotFoundException('Not found');
+
+    return {
+      _id: doc._id.toString(),
+      name: lang
+        ? doc.name?.[lang] ?? doc.name?.[other] ?? ''
+        : doc.name,
+      description: lang
+        ? doc.description?.[lang] ?? doc.description?.[other] ?? ''
+        : doc.description,
+      assignee: lang
+        ? typeof doc.assignee === 'object'
+          ? doc.assignee[lang] ?? doc.assignee[other] ?? ''
+          : doc.assignee
+        : doc.assignee,
+      subtasks: (doc.subtasks || []).map(s => ({
+        title: lang
+          ? typeof s.title === 'object'
+            ? s.title[lang] ?? s.title[other] ?? ''
+            : s.title
+          : s.title,
+        done: s.done,
+      })),
+      status: doc.status,
+      date: doc.date,
+      datecomplete: doc.datecomplete,
+      language: lang || 'all',
+    };
   }
 
+  // UPDATE
   async update(id: string, dto: UpdateTodoListDto): Promise<TodoList | null> {
-    const { name, description, language, subtasks, ...rest } = dto;
-    const updateData: Record<string, unknown> = { ...rest };
+    const { name, description, assignee, language, subtasks, ...rest } = dto;
+    const updateData: Record<string, any> = { ...rest };
 
-    if (language && name) {
-      updateData[`name.${language}`] = name;
+    // NAME
+    if (name) {
+      if (typeof name === 'object') {
+        const nameObj = name as Record<string, string>;
+        for (const key in nameObj) {
+          updateData[`name.${key}`] = nameObj[key];
+        }
+      } else if (language) {
+        updateData[`name.${language}`] = name;
+      } else {
+        throw new Error('Language must be provided when name is a string');
+      }
     }
 
-    if (language && description) {
-      updateData[`description.${language}`] = description;
+    // DESCRIPTION
+    if (description) {
+      if (typeof description === 'object') {
+        const descObj = description as Record<string, string>;
+        for (const key in descObj) {
+          updateData[`description.${key}`] = descObj[key];
+        }
+      } else if (language) {
+        updateData[`description.${language}`] = description;
+      } else {
+        throw new Error('Language must be provided when description is a string');
+      }
     }
 
-    if (language && subtasks) {
+    // ASSIGNEE
+    if (assignee) {
+      if (typeof assignee === 'object') {
+        const assigneeObj = assignee as Record<string, string>;
+        for (const key in assigneeObj) {
+          updateData[`assignee.${key}`] = assigneeObj[key];
+        }
+      } else if (language) {
+        updateData[`assignee.${language}`] = assignee;
+      } else {
+        throw new Error('Language must be provided when assignee is a string');
+      }
+    }
+
+    // SUBTASKS
+    if (subtasks) {
       updateData.subtasks = subtasks.map((s) => ({
-        title: { [language]: s.title },
+        title:
+          typeof s.title === 'object'
+            ? s.title
+            : language
+            ? { [language]: s.title }
+            : (() => {
+                throw new Error('Language must be provided when subtask.title is a string');
+              })(),
         done: s.done ?? false,
       }));
     }
 
+    // UPDATE
     return this.todoListModel
       .findByIdAndUpdate(id, { $set: updateData }, { new: true })
       .exec();
   }
 
+
+  // DELETE
   async remove(id: string) {
     const result = await this.todoListModel.findByIdAndDelete(id).exec();
-    if (!result) {
-      throw new NotFoundException('ID not found');
-    }
-    return { message: 'Delete successfully' };
+    if (!result) throw new NotFoundException('Not found');
+    return { message: 'Deleted successfully' };
   }
 }

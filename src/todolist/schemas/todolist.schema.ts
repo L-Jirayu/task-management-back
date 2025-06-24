@@ -15,7 +15,7 @@ class SubTask {
   done: boolean;
 }
 
-@Schema()
+@Schema({ timestamps: true})
 export class TodoList {
   @Prop({ type: Object, required: true })
   name: LocalizedString;
@@ -29,7 +29,8 @@ export class TodoList {
 
   @Prop() datecomplete: Date;
 
-  @Prop() assignee?: string;
+  @Prop({ type: Object })
+  assignee?: { [lang: string]: string };
 
   @Prop({ type: [SubTask], default: [] })
   subtasks: SubTask[];
