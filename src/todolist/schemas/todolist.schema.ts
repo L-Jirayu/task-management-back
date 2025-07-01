@@ -37,3 +37,4 @@ export class TodoList {
 }
 
 export const TodoListSchema = SchemaFactory.createForClass(TodoList);
+

@@ -23,3 +23,4 @@ export class QueryTodoListDto {
   @IsOptional() @IsString() subtasks?: string;
 
 }
+
