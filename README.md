@@ -1,3 +1,10 @@
+**npm install**</br>
+**docker compose up -d**</br>
+**mongodb://[username]:[password]@localhost:27017/?authSource=admin**</br>
+**[username]:[password] see in docker-compose.yml**</br>
+
+----------------------------------------------------------------------------------------
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
