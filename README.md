@@ -3,16 +3,16 @@
 
 For study about Backend Development (CRUD Concept) and use API for connect to Frontend 
 
------------------------------------------------------------------------------------------------------</br>
+-----------------------------------------------------------------------------------------------------
 
 ## Tools
 
-Framework of NodeJS to have name is **NestJS**,</br>
+Framework of NodeJS to have name is **NestJS**</br>
 **RESTFul API** for connect to Frontend part</br>
 **Docker** for connect to Database part</br>
 **MongoDB** for Database</br>
 
------------------------------------------------------------------------------------------------------</br>
+-----------------------------------------------------------------------------------------------------
 
 ## Setup
 
@@ -24,7 +24,7 @@ Framework of NodeJS to have name is **NestJS**,</br>
 
 P.S. [username]:[password] see in docker-compose.yml
 
------------------------------------------------------------------------------------------------------</br>
+-----------------------------------------------------------------------------------------------------
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
