@@ -1,9 +1,27 @@
-**npm install**</br>
-**docker compose up -d**</br>
-**mongodb://[username]:[password]@localhost:27017/?authSource=admin**</br>
-**[username]:[password] see in docker-compose.yml**</br>
+# Todolist Backend
+## Concept
 
-----------------------------------------------------------------------------------------
+For study about Backend Development (CRUD Concept) and use API for connect to Frontend 
+
+-----------------------------------------------------------------------------------------------------</br>
+
+## Tools
+
+Framework of NodeJS to have name is **NestJS** and **RESTFul API** for connect to Frontend part</br>
+
+-----------------------------------------------------------------------------------------------------</br>
+
+## Setup
+
+1.install NodeJS: https://nodejs.org/en/download/current</br>
+2.use git for clone</br>
+3.**npm install** and **docker compose up -d** for all npm it has.</br>
+4.Setup MongoDB Compass and connection **mongodb://[username]:[password]@localhost:27017/?authSource=admin**
+5.**npm run start:dev** for run
+
+P.S. [username]:[password] see in docker-compose.yml
+
+-----------------------------------------------------------------------------------------------------</br>
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
