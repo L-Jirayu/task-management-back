@@ -7,7 +7,10 @@ For study about Backend Development (CRUD Concept) and use API for connect to Fr
 
 ## Tools
 
-Framework of NodeJS to have name is **NestJS** and **RESTFul API** for connect to Frontend part</br>
+Framework of NodeJS to have name is **NestJS**,</br>
+**RESTFul API** for connect to Frontend part</br>
+**Docker** for connect to Database part</br>
+**MongoDB** for Database</br>
 
 -----------------------------------------------------------------------------------------------------</br>
 
