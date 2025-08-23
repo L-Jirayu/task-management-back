@@ -18,9 +18,19 @@ Framework of NodeJS to have name is **NestJS**</br>
 
 1.install NodeJS: https://nodejs.org/en/download/current</br>
 2.use git for clone</br>
-3.**npm install** and **docker compose up -d** for install all npm it has and connect to Database with Docker</br>
-4.Setup MongoDB Compass and connection **mongodb://[username]:[password]@localhost:27017/?authSource=admin**
-5.**npm run start:dev** for run
+3.use this command for install all npm it has. and **** for connect to Docker
+```bash
+npm install
+docker compose up -d
+```
+4.Setup MongoDB Compass and connection 
+```bash
+mongodb://[username]:[password]@localhost:27017/?authSource=admin
+```
+5.use this command for run
+```bash
+npm run start:dev
+```
 
 P.S. [username]:[password] see in docker-compose.yml
 
