@@ -1,3 +1,41 @@
+# Todolist Backend
+## Concept
+
+For study about Backend Development (CRUD Concept) and use API for connect to Frontend 
+
+-----------------------------------------------------------------------------------------------------
+
+## Tools
+
+Framework of NodeJS to have name is **NestJS**</br>
+**RESTFul API** for connect to Frontend part</br>
+**Docker** for connect to Database part</br>
+**MongoDB** for Database</br>
+
+-----------------------------------------------------------------------------------------------------
+
+## Setup
+
+1.install NodeJS: https://nodejs.org/en/download/current</br>
+2.use git for clone</br>
+3.use this command for install all npm it has. and **** for connect to Docker
+```bash
+npm install
+docker compose up -d
+```
+4.Setup MongoDB Compass and connection 
+```bash
+mongodb://[username]:[password]@localhost:27017/?authSource=admin
+```
+5.use this command for run
+```bash
+npm run start:dev
+```
+
+P.S. [username]:[password] see in docker-compose.yml
+
+-----------------------------------------------------------------------------------------------------
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
