@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "2d6e74c2-3ea7-491e-bd0d-4f425ca25b5c",
+		"name": "todolist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43023550"
+	},
+	"item": [
+		{
+			"name": "Read",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/todolist/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"todolist",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReadById",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/todolist?sortBy=name&language=en&name=asdf&status=false",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"todolist"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "name"
+						},
+						{
+							"key": "language",
+							"value": "en"
+						},
+						{
+							"key": "name",
+							"value": "asdf"
+						},
+						{
+							"key": "status",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": {\r\n    \"th\": \"เอเสสดีเอฟ\",\r\n    \"en\": \"ASDF\"\r\n  },\r\n  \"description\": {\r\n    \"th\": \"กำลังนอน\",\r\n    \"en\": \"Sleeping\"\r\n  },\r\n  \"status\": false,\r\n  \"date\": \"2025-06-14\",\r\n  \"datecomplete\": \"2025-06-16\",\r\n  \"assignee\": {\r\n    \"th\": \"บี\",\r\n    \"en\": \"B\"\r\n  },\r\n  \"subtasks\": [\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 1\",\r\n        \"en\": \"Subtask 1\"\r\n      },\r\n      \"done\": false\r\n    },\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 2\",\r\n        \"en\": \"Subtask 2\"\r\n      },\r\n      \"done\": true\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/todolist/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"todolist",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Jimmy",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "Escape from Dai Shocker",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "date",
+							"value": "2025-06-06",
+							"disabled": true
+						},
+						{
+							"key": "datecomplete",
+							"value": "2025-06-13",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/todolist/685915bbd4936802eb5235eb",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"todolist",
+						"685915bbd4936802eb5235eb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/todolist/68591d900ac3c72ed2b9880c",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"todolist",
+						"68591d900ac3c72ed2b9880c"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
