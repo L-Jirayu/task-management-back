@@ -3,9 +3,21 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TodolistModule } from './todolist/todolist.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://root:example@localhost:27017/todolist?authSource=admin'), TodolistModule],
+  imports: [
+    // MongooseModule.forRoot('mongodb://root:example@localhost:27017/todolist?authSource=admin'), 
+
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (cfg: ConfigService) => ({
+        uri: cfg.get<string>('MONGODB_URI') || 'mongodb://root:example@localhost:27017/todolist?authSource=admin',
+        dbName: 'todolist',
+      }),
+    }),
+    TodolistModule],
   controllers: [AppController],
   providers: [AppService],
 })
