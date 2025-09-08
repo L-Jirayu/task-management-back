@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TodolistModule } from './todolist/todolist.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         dbName: 'todolist',
       }),
     }),
-    TodolistModule],
+    TodolistModule,
+    AuthModule,
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

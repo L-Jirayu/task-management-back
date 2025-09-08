@@ -7,183 +7,302 @@
 	},
 	"item": [
 		{
-			"name": "Read",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
+			"name": "todo",
+			"item": [
+				{
+					"name": "Read",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/todolist/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todolist",
+								""
+							]
+						}
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
+				{
+					"name": "ReadById",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/todolist?sortBy=name&language=en&name=asdf&status=false",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todolist"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "language",
+									"value": "en"
+								},
+								{
+									"key": "name",
+									"value": "asdf"
+								},
+								{
+									"key": "status",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:3000/todolist/",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"todolist",
-						""
-					]
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": {\r\n    \"th\": \"เอเสสดีเอฟ\",\r\n    \"en\": \"ASDF\"\r\n  },\r\n  \"description\": {\r\n    \"th\": \"กำลังนอน\",\r\n    \"en\": \"Sleeping\"\r\n  },\r\n  \"status\": false,\r\n  \"date\": \"2025-06-14\",\r\n  \"datecomplete\": \"2025-06-16\",\r\n  \"assignee\": {\r\n    \"th\": \"บี\",\r\n    \"en\": \"B\"\r\n  },\r\n  \"subtasks\": [\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 1\",\r\n        \"en\": \"Subtask 1\"\r\n      },\r\n      \"done\": false\r\n    },\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 2\",\r\n        \"en\": \"Subtask 2\"\r\n      },\r\n      \"done\": true\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/todolist/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todolist",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Jimmy",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Escape from Dai Shocker",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "date",
+									"value": "2025-06-06",
+									"disabled": true
+								},
+								{
+									"key": "datecomplete",
+									"value": "2025-06-13",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {\r\n        \"th\": \"อะไรกัน\",\r\n        \"en\": \"WHAT?\"\r\n    },\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/todolist/68b95a95c518a09df56bcc4d",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todolist",
+								"68b95a95c518a09df56bcc4d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/todolist/68b95f620bb23b2d8e9f3672",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todolist",
+								"68b95f620bb23b2d8e9f3672"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "ReadById",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/todolist?sortBy=name&language=en&name=asdf&status=false",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"todolist"
-					],
-					"query": [
-						{
-							"key": "sortBy",
-							"value": "name"
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"asdf1234\",\r\n    \"name\": \"System Test\",\r\n    \"tel\": \"5555555555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "language",
-							"value": "en"
-						},
-						{
-							"key": "name",
-							"value": "asdf"
-						},
-						{
-							"key": "status",
-							"value": "false"
+						"url": {
+							"raw": "localhost:3000/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"register"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create",
-			"request": {
-				"auth": {
-					"type": "noauth"
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\": {\r\n    \"th\": \"เอเสสดีเอฟ\",\r\n    \"en\": \"ASDF\"\r\n  },\r\n  \"description\": {\r\n    \"th\": \"กำลังนอน\",\r\n    \"en\": \"Sleeping\"\r\n  },\r\n  \"status\": false,\r\n  \"date\": \"2025-06-14\",\r\n  \"datecomplete\": \"2025-06-16\",\r\n  \"assignee\": {\r\n    \"th\": \"บี\",\r\n    \"en\": \"B\"\r\n  },\r\n  \"subtasks\": [\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 1\",\r\n        \"en\": \"Subtask 1\"\r\n      },\r\n      \"done\": false\r\n    },\r\n    {\r\n      \"title\": {\r\n        \"th\": \"ทำงานย่อย 2\",\r\n        \"en\": \"Subtask 2\"\r\n      },\r\n      \"done\": true\r\n    }\r\n  ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"asdf1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:3000/todolist/",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"todolist",
-						""
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "Jimmy",
-							"disabled": true
-						},
-						{
-							"key": "description",
-							"value": "Escape from Dai Shocker",
-							"disabled": true
-						},
-						{
-							"key": "status",
-							"value": "true",
-							"disabled": true
-						},
-						{
-							"key": "date",
-							"value": "2025-06-06",
-							"disabled": true
-						},
-						{
-							"key": "datecomplete",
-							"value": "2025-06-13",
-							"disabled": true
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTczNDg4MzEsImV4cCI6MTc1NzM1MjQzMX0.3jDf_iBwFQw8b4JNzgVa3VPtiQHmFJP0Io0w4gobjYY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/users/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"profile"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update",
-			"request": {
-				"auth": {
-					"type": "noauth"
+					},
+					"response": []
 				},
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"status\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"asdf1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"logout"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/todolist/685915bbd4936802eb5235eb",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"todolist",
-						"685915bbd4936802eb5235eb"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Remove",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/todolist/68591d900ac3c72ed2b9880c",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"todolist",
-						"68591d900ac3c72ed2b9880c"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
