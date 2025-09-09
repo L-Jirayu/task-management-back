@@ -32,7 +32,13 @@ mongodb://[username]:[password]@localhost:27017/?authSource=admin
 npm run start:dev
 ```
 
-P.S. [username]:[password] see in docker-compose.yml
+P.S. [username]:[password] see in docker-compose.yml</br>
+
+### IT'S IMPORTANT
+create .emv in root project folder</br>
+and copy that</br>
+**JWT_SECRET=yoursecretkey**</br>
+and save</br>
 
 -----------------------------------------------------------------------------------------------------
 
@@ -94,6 +100,7 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
 
 ## Deployment
 
