@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',         // dev (Vite)
-      'https://minitaskmanage.vercel.app/', // prod (Vercel deploy)
+      'https://minitaskmanage.vercel.app', // prod (Vercel deploy)
     ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
