@@ -8,8 +8,11 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: 'http://localhost:5173',   // ตรงกับพอร์ต Vite ของคุณ
-    credentials: true,                 // <<< สำคัญ: ให้ใส่ Access-Control-Allow-Credentials: true
+    origin: [
+      'http://localhost:5173',         // dev (Vite)
+      'https://minitaskmanage.vercel.app/', // prod (Vercel deploy)
+    ],
+    credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
