@@ -1,3 +1,4 @@
+// src/app.module.ts
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,10 +8,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
+// ⬇️ เพิ่ม serve static
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://root:example@localhost:27017/todolist?authSource=admin'), 
-
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
@@ -19,9 +22,18 @@ import { UserModule } from './user/user.module';
         dbName: 'todolist',
       }),
     }),
+
+    // ✅ ชี้ไปที่โฟลเดอร์ build ของ Vite (เช่น client/dist)
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client', 'dist'),
+      // กันไม่ให้ทับ API (เดี๋ยว fallback จัดการ)
+      exclude: ['/api*'],
+    }),
+
     TodolistModule,
     AuthModule,
-    UserModule],
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
