@@ -27,7 +27,7 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client', 'dist'),
       // กันไม่ให้ทับ API (เดี๋ยว fallback จัดการ)
-      exclude: ['/api*'],
+      exclude: ['/api(.*)'],
     }),
 
     TodolistModule,
