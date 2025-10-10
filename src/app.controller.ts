@@ -14,7 +14,13 @@ export class AppController {
   // ✅ เปลี่ยนชื่อเป็น /ready สำหรับตรวจระบบจริง (DB, module)
   @Get('ready')
   async ready() {
-    const state = connection.readyState; // 0=disconnected,1=connected,2=connecting,3=disconnecting
-    return { dbConnected: state === 1, state };
+    const state = connection?.readyState ?? 0; // ป้องกัน undefined
+    const isConnected = state === 1;
+
+    return {
+      dbConnected: isConnected,
+      state,
+      message: isConnected ? 'Database connected' : 'Database not connected',
+    };
   }
 }
